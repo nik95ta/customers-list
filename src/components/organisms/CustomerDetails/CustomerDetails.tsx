@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { CustomerInterface } from '../../../interfaces';
-import { Button, CustomerEditor } from '../../../components';
+import { CustomerInterface, ProjectInterface } from '../../../interfaces';
+import { Button, CustomerEditor, ProjectsList } from '../../../components';
 import customers from '../../../customers.json';
 
 const emptyCustomer = {
@@ -44,6 +44,10 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({ customerId, onSave, i
         customer={details}
         onChange={(customer: CustomerInterface) => handleChange(customer)}
         industries={industries}
+      />
+      <ProjectsList
+        projects={details.projects}
+        onChange={(projects: ProjectInterface[]) => handleChange({ projects })}
       />
       <Button type='submit'>Save</Button>
     </form>
