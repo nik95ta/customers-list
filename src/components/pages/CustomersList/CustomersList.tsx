@@ -1,13 +1,18 @@
 import React, { useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addCustomer, deleteCustomer, updateCustomer } from '../../../features/customers';
 import { CustomerInterface } from '../../../interfaces';
+import { useCustomerData } from '../../../hooks';
 import { CustomerDetails, CustomersListHeader, CustomersTable, Modal } from '../../../components';
+import { getUniqueId } from '../../../utils';
 import styles from './CustomersList.module.css';
-import customers from '../../../customers.json';
 
 const CustomersList: React.FC = () => {
+  const dispatch = useDispatch();
+  const { customers, error, isLoading } = useCustomerData();
   const [filter, setFilter] = useState<string>('');
-  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
 
   const filteredCustomers = useMemo(
     () => customers?.filter((customer: CustomerInterface) => (filter ? customer.industry === filter : true)) || [],
@@ -26,7 +31,7 @@ const CustomersList: React.FC = () => {
 
   const handleDeleteCustomer = (id: string) => {
     if (window.confirm('Are you sure to delete?')) {
-      console.log('Delete Id', id);
+      dispatch(deleteCustomer(id));
     }
   };
 
@@ -37,9 +42,9 @@ const CustomersList: React.FC = () => {
 
   const handleSaveCustomer = (customer: CustomerInterface) => {
     if (customer.id) {
-      console.log('in edit mode');
+      dispatch(updateCustomer(customer));
     } else {
-      console.log('in add mode');
+      dispatch(addCustomer({ ...customer, id: getUniqueId() }));
     }
     handleCloseModal();
   };
@@ -48,6 +53,18 @@ const CustomersList: React.FC = () => {
     setSelectedCustomerId(null);
     setIsModalOpen(true);
   };
+
+  if (error) return <p>Error: {String(error)}</p>;
+
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loading}>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>

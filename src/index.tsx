@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { CustomersList } from './components';
+import { Provider } from 'react-redux';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { store } from './app/store';
+import { CustomersList } from './components';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <CustomersList />
-    <div id='modal-root' />
+    <Provider store={store}>
+      <CustomersList />
+      <div id='modal-root' />
+    </Provider>
   </React.StrictMode>,
 );
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { CustomerInterface, ProjectInterface } from '../../../interfaces';
 import { Button, CustomerEditor, ProjectsList } from '../../../components';
-import customers from '../../../customers.json';
+import { RootState } from '../../../app/store';
 
 const emptyCustomer = {
   id: '',
@@ -12,13 +13,15 @@ const emptyCustomer = {
   about: '',
 };
 
-interface CustomerDetailsProps {
+interface CustomerFormProps {
   customerId: string | null;
   onSave: (customer: CustomerInterface) => void;
   industries: string[];
 }
 
-const CustomerDetails: React.FC<CustomerDetailsProps> = ({ customerId, onSave, industries }) => {
+const CustomerDetails: React.FC<CustomerFormProps> = ({ customerId, onSave, industries }) => {
+  const customers = useSelector((state: RootState) => state.customers.list);
+
   const customerDetails = useMemo(() => {
     return customerId ? customers.find((customer) => customer.id === customerId) || emptyCustomer : emptyCustomer;
   }, [customerId, customers]);
