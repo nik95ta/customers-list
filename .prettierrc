@@ -1,0 +1,15 @@
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "editor.formatOnSave": true,
+  "requireConfig": false,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "semi": true,
+  "jsxSingleQuote": true,
+  "html.format.wrapLineLength": 80,
+  "html.format.wrapAttributes": "force-expand-multiline",
+  "arrowParens": "always"
+}

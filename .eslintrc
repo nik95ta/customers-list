@@ -1,0 +1,48 @@
+{
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb-typescript",
+    "prettier"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "ignorePatterns": [
+    "tests",
+    "coverage"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": "off",
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "object-curly-newline": [
+      "error",
+      {
+        "consistent": true
+      }
+    ],
+    "react/jsx-one-expression-per-line": "off",
+    "implicit-arrow-linebreak": "off",
+    "import/prefer-default-export": "off",
+    "react/require-default-props": "off",
+    "no-underscore-dangle": "off",
+    "no-underscore-dangle1": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreUrls": true,
+        "ignoreStrings": true
+      }
+    ],
+    "import/extensions": "off",
+    "class-methods-use-this": "off"
+  }
+}
