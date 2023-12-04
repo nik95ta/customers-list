@@ -1,7 +1,16 @@
 import React, { useCallback } from 'react';
 import { ProjectInterface } from '../../../interfaces';
 import { Button, ProjectEditor } from '../../../components';
+import { getUniqueId, insertItemAtIndex, overrideListAtIndex, removeItemAtIndex } from '../../../utils';
 import styles from './ProjectsList.module.css';
+
+const emptyProject = {
+  id: '',
+  name: '',
+  contact: '',
+  start_date: '',
+  end_date: '',
+};
 
 interface ProjectsListProps {
   projects: ProjectInterface[];
@@ -11,8 +20,7 @@ interface ProjectsListProps {
 const ProjectsList: React.FC<ProjectsListProps> = ({ projects, onChange }) => {
   const handleProjectChange = useCallback(
     (index: number, updatedProject: ProjectInterface) => {
-      console.log(index, updatedProject);
-      onChange(projects);
+      onChange(overrideListAtIndex(projects, updatedProject, index));
     },
     [projects, onChange],
   );
@@ -20,7 +28,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, onChange }) => {
   const addProject = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      onChange(projects);
+      onChange(insertItemAtIndex(projects, { ...emptyProject, id: getUniqueId() }, projects.length));
     },
     [projects, onChange],
   );
@@ -28,8 +36,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, onChange }) => {
   const removeProject = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
       event.preventDefault();
-      console.log(index);
-      onChange(projects);
+      onChange(removeItemAtIndex(projects, index));
     },
     [projects, onChange],
   );
