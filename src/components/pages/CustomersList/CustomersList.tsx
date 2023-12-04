@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { CustomerInterface } from '../../../interfaces';
-import { CustomersListHeader, CustomersTable, Modal } from '../../../components';
+import { CustomerDetails, CustomersListHeader, CustomersTable, Modal } from '../../../components';
 import styles from './CustomersList.module.css';
 import customers from '../../../customers.json';
 
@@ -35,6 +35,15 @@ const CustomersList: React.FC = () => {
     setSelectedCustomerId(null);
   };
 
+  const handleSaveCustomer = (customer: CustomerInterface) => {
+    if (customer.id) {
+      console.log('in edit mode');
+    } else {
+      console.log('in add mode');
+    }
+    handleCloseModal();
+  };
+
   const handleAddCustomer = () => {
     setSelectedCustomerId(null);
     setIsModalOpen(true);
@@ -45,7 +54,7 @@ const CustomersList: React.FC = () => {
       <CustomersListHeader onAddCustomer={handleAddCustomer} onChangeFilter={setFilter} industries={uniqueIndustries} />
       <CustomersTable customers={filteredCustomers} onEdit={handleEditCustomer} onDelete={handleDeleteCustomer} />
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <div>{selectedCustomerId}</div>
+        <CustomerDetails customerId={selectedCustomerId} onSave={handleSaveCustomer} industries={uniqueIndustries} />
       </Modal>
     </div>
   );
